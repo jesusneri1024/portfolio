@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Portfolio - [Jesus Neri]</title>
+    <link rel="shortcut icon" href="pcicon.png" />
+    <style>
+        :root {
+            --primary-color: #00FF00;
+            --secondary-color: #00CC00;
+            --background: #001100;
+            --glow: rgba(0, 255, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--primary-color);
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .terminal {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--secondary-color);
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 0 30px var(--glow);
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--background);
+            background-color: var(--primary-color);
+            padding: 2px 4px;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .header {
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .content {
+            margin-bottom: 2rem;
+        }
+
+        .command-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        #command {
+            background: transparent;
+            border: none;
+            color: var(--primary-color);
+            font-family: inherit;
+            font-size: 1rem;
+            width: 100%;
+            padding: 0.5rem;
+            caret-shape: block;
+        }
+
+        #command:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--background);
+            border-top: 1px solid var(--secondary-color);
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .terminal {
+                padding: 1rem;
+                margin: 0 1rem;
+            }
+
+            body {
+                font-size: 14px;
+            }
+
+            #command {
+                font-size: 14px;
+            }
+        }
+
+        /* Efectos especiales */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+    <div class="scanline"></div>
+    
+    <div class="terminal">
+        <div class="header">
+            <h1>[Jesus Neri] @PORTFOLIO:~$ v2.1.3</h1>
+            <p>INITIALIZING SYSTEM... READY</p>
+        </div>
+        
+        <div class="content">
+            <div id="output">
+                <!-- Contenido dinámico -->
+            </div>
+
+            <div class="command-input">
+                <span>></span>
+                <input type="text" id="command" 
+                       placeholder="TYPE COMMAND (help FOR OPTIONS)" 
+                       autocomplete="off"
+                       autocapitalize="off"
+                       spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <span>SYSTEM: OPERATIONAL</span>
+        <span>USER: Jesus Neri</span>
+        <span>SOUND: <span id="sound-status">ON</span></span>
+        <span class="cursor">_</span>
+    </div>
+
+    <script>
+        // Configuración inicial
+        const userData = {
+            name: "Jesus Neri",
+            title: "[Interactive Digital Designer]",
+            email: "[jesusneri1024@outlook.com]",
+            github: "[github.com/jesusneri1024]",
+            linkedin: "[linkedin.com/in/jesusneri1024]",
+            yearsExperience: "3",
+            skills: ["Unity", "C#", "Python"]
+        };
+
+        let commandHistory = [];
+        let historyIndex = -1;
+        let soundEnabled = true;
+
+        // Sonidos (usar archivos locales)
+        const typeSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2853/2853-preview.mp3');
+        const enterSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2854/2854-preview.mp3');
+        const errorSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2852/2852-preview.mp3');
+
+        // Comandos disponibles
+        const commands = {
+            help: () => showHelp(),
+            about: () => showAbout(),
+            projects: () => showProjects(),
+            contact: () => showContact(),
+            clear: () => clearOutput(),
+            skills: () => showSkills(),
+            resume: () => window.open('https://drive.google.com/file/d/14SacdasrhkHLKUh-KmgIDC_hbQm17Wby/view?usp=sharing', '_blank'),
+            theme: (args) => changeTheme(args),
+            sound: () => toggleSound()
+        };
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            initMatrix();
+            printWelcomeMessage();
+            setupEventListeners();
+        });
+
+        function printWelcomeMessage() {
+            addOutput(`Welcome to ${userData.name}'s terminal portfolio`);
+            addOutput("Type 'help' to see available commands");
+        }
+
+        function setupEventListeners() {
+            const commandInput = document.getElementById('command');
+            
+            commandInput.addEventListener('keyup', (e) => {
+                if (soundEnabled) typeSound.play();
+                
+                if (e.key === 'Enter') {
+                    handleCommand(commandInput.value);
+                    commandInput.value = '';
+                }
+                
+                // Historial de comandos
+                if (e.key === 'ArrowUp') {
+                    if (historyIndex < commandHistory.length - 1) {
+                        historyIndex++;
+                        commandInput.value = commandHistory[historyIndex];
+                    }
+                }
+                
+                if (e.key === 'ArrowDown') {
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        commandInput.value = commandHistory[historyIndex];
+                    }
+                }
+            });
+        }
+
+        function handleCommand(cmd) {
+            if (!cmd) return;
+            
+            commandHistory.unshift(cmd);
+            historyIndex = -1;
+            
+            const [baseCommand, ...args] = cmd.trim().toLowerCase().split(' ');
+            addOutput(`> ${cmd}`, 'user');
+            
+            if (soundEnabled) enterSound.play();
+            
+            if (commands[baseCommand]) {
+                try {
+                    commands[baseCommand](args);
+                } catch (error) {
+                    addOutput(`ERROR: ${error.message}`, 'error');
+                    if (soundEnabled) errorSound.play();
+                }
+            } else {
+                addOutput(`Command not found: ${baseCommand}`, 'error');
+                if (soundEnabled) errorSound.play();
+            }
+        }
+
+        // Funciones de comandos
+        function showHelp() {
+            addOutput(`Available commands:
+- help: Show this help
+- about: About me
+- projects: My projects
+- contact: Contact info
+- skills: Technical skills
+- resume: Download resume
+- theme [color]: Change theme (green/cyan/amber)
+- sound: Toggle sound effects
+- clear: Clear terminal`);
+        }
+
+        function showAbout() {
+            addOutput(`${userData.name} - ${userData.title}
+Experience: ${userData.yearsExperience}+ years
+Interactive digital designer focused on crafting
+experiences that merge creativity with functionality.
+
+> TECHNICAL PROFILE:
+${userData.skills.join(' | ')}`);
+        }
+
+        function showProjects() {
+            addOutput(`Featured Projects:
+1. [2023] Real State Site
+   - Real estate platform where properties uploaded to the MongoDB database were dynamically displayed as styled cards on the website, featuring a clean and responsive design.
+   - <a href="https://pagina-12-line-opal.vercel.app/" target="_blank">Demo</a> 
+
+2. [2024] Unity Agent
+   - Autonomous AI Agent Navigation
+   - <a href="https://unity-ai-agent.vercel.app/" target="_blank">Live Demo</a>
+
+3. [2025] Interactive game designed to teach children about viral disease prevention.
+   - Developed in Unity, the game uses Python and computer vision to
+track ball throws on a projector screen, detecting real-time impact
+points to trigger in-game responses.
+   - <a href="#" target="_blank">Building...</a>`);
+        }
+
+        function showContact() {
+            addOutput(`Contact Options:
+- Email: <a href="mailto:${userData.email}">${userData.email}</a>
+- GitHub: <a href="https://www.github.com/jesusneri1024" target="_blank">${userData.github}</a>
+- LinkedIn: <a href="https://www.linkedin.com/in/jesusneri1024/" target="_blank">${userData.linkedin}</a>
+
+`);
+        }
+
+        function showSkills() {
+            addOutput(`Technical Skills:
+Game Dev: C#, Maya 3D
+Scripting: Python
+Design: UX/UI, Figma`);
+        }
+
+        function changeTheme(args) {
+            const color = args[0];
+            const validThemes = ['green', 'cyan', 'amber'];
+            
+            if (!validThemes.includes(color)) {
+                throw new Error(`Invalid theme. Options: ${validThemes.join(', ')}`);
+            }
+            
+            document.documentElement.style.setProperty('--primary-color', 
+                color === 'green' ? '#00FF00' :
+                color === 'cyan' ? '#00FFFF' :
+                '#FFC107');
+            
+            addOutput(`Theme changed to: ${color}`);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-status').textContent = 
+                soundEnabled ? 'ON' : 'OFF';
+            addOutput(`Sound effects: ${soundEnabled ? 'ENABLED' : 'DISABLED'}`);
+        }
+
+        // Utilidades
+        function addOutput(text, type = 'system') {
+            const output = document.getElementById('output');
+            const p = document.createElement('p');
+            
+            p.className = type;
+            p.innerHTML = text.replace(/\n/g, '<br>');
+            
+            output.appendChild(p);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            document.getElementById('output').innerHTML = '';
+        }
+
+        // Efecto Matrix
+        function initMatrix() {
+            const canvas = document.getElementById('matrix');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const chars = '01';
+            const fontSize = 14;
+            const columns = canvas.width/fontSize;
+            const drops = [];
+            
+            for(let x = 0; x < columns; x++) drops[x] = 1;
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 17, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00FF00';
+                ctx.font = fontSize + 'px monospace';
+
+                for(let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+                    
+                    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+                        drops[i] = 0;
+                    drops[i]++;
+                }
+            }
+
+            setInterval(draw, 50);
+        }
+    </script>
+</body>
+</html>
