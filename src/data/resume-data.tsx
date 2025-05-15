@@ -1,240 +1,146 @@
 import {
-  ClevertechLogo,
-  ConsultlyLogo,
-  JojoMobileLogo,
-  MonitoLogo,
-  NSNLogo,
-  ParabolLogo,
-} from "@/images/logos";
-import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons";
+  GitHubIcon,
+  LinkedInIcon,
+  XIcon,
+} from "@/components/icons";
 
 export const RESUME_DATA = {
-  name: "Bartosz Jarocki",
-  initials: "BJ",
-  location: "Wrocław, Poland, CET",
-  locationLink: "https://www.google.com/maps/place/Wrocław",
-  about:
-    "Detail-oriented Full Stack Engineer dedicated to building high-quality products.",
+  name: "Jesús Ángel Neri Hernández",
+  initials: "JNH",
+  location: "León, Guanajuato, Mexico",
+  locationLink: "https://www.google.com/maps/place/León,+Guanajuato",
+  about: "Interactive Design student with a computer science background, focused on real-time graphics, 3D content creation, and low-level systems development.",
   summary: (
     <>
-      Frontend-focused Full Stack Engineer specializing in high-performance
-      React applications, scalable Node.js services, and real-time collaboration
-      systems. Experienced in technical architecture design and remote team
-      leadership.
+      Digital Interactive Design student at Ibero León with prior studies in Computer Science.
+      Skilled in full-stack development, real-time 3D engines, procedural game design, and audiovisual production. Passionate about building interactive experiences across media and platforms.
     </>
   ),
-  avatarUrl: "https://avatars.githubusercontent.com/u/1017620?v=4",
-  personalWebsiteUrl: "https://jarocki.me",
+  avatarUrl: "https://media.licdn.com/dms/image/v2/D4E03AQEnw1G270NM0Q/profile-displayphoto-shrink_800_800/B4EZVsn8RyHMAo-/0/1741284165006?e=1752710400&v=beta&t=AWpd7Xy2vGzuT6Kr6mSW0cmt4gxo9aOBJGE6BYjaa1o", // You can link your profile picture here
+  personalWebsiteUrl: "https://www.jesusneri1024.com",
   contact: {
-    email: "bartosz.jarocki@hey.com",
-    tel: "+48530213401",
+    email: "jesusneri1024@outlook.com",
+    tel: "+52 477 256 6504",
     social: [
       {
         name: "GitHub",
-        url: "https://github.com/BartoszJarocki",
+        url: "https://github.com/jesusneri1024",
         icon: GitHubIcon,
       },
       {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/bjarocki/",
+        url: "https://linkedin.com/in/jesusneri1024",
         icon: LinkedInIcon,
       },
       {
         name: "X",
-        url: "https://x.com/BartoszJarocki",
+        url: "https://x.com/jesusneri1024",
         icon: XIcon,
       },
     ],
   },
   education: [
     {
-      school: "Wrocław University of Technology",
-      degree: "Bachelor's Degree in Control systems engineering and Robotics",
-      start: "2007",
-      end: "2010",
+      school: "Universidad Iberoamericana León",
+      degree: "B.A. in Digital Interactive Design",
+      start: "2022",
+      end: "2026",
+    },
+    {
+      school: "Universidad de Guanajuato",
+      degree: "B.Sc. in Computer Science (1 year)",
+      start: "2021",
+      end: "2022",
+    },
+    {
+      school: "Instituto Leonés High School",
+      degree: "Bronze Medalist, 12th National Physics Talent Competition",
+      start: "2017",
+      end: "2020",
     },
   ],
   work: [
     {
-      company: "Film.io",
-      link: "https://film.io",
-      badges: ["Remote", "React", "Next.js", "TypeScript", "Node.js"],
-      title: "Software Architect",
-      logo: ConsultlyLogo,
-      start: "2024",
-      end: null,
-      description: (
-        <>
-          Leading technical architecture of a blockchain-based film funding
-          platform.
-          <ul className="list-inside list-disc">
-            <li>
-              Architecting migration from CRA to Next.js for improved
-              performance, SEO, and DX
-            </li>
-            <li>
-              Established release process enabling faster deployments and
-              reliable rollbacks
-            </li>
-            <li>
-              Implementing system-wide monitoring and security improvements
-            </li>
-          </ul>
-        </>
-      ),
-    },
-    {
-      company: "Parabol",
-      link: "https://parabol.co",
-      badges: [
-        "Remote",
-        "React",
-        "TypeScript",
-        "Node.js",
-        "GraphQL",
-        "Tailwind CSS",
-      ],
-      title: "Senior Full Stack Developer",
-      logo: ParabolLogo,
-      start: "2021",
+      company: "12 Line Inmobiliaria",
+      link: "",
+      badges: ["React", "MongoDB", "Branding", "Media Production"],
+      title: "Web Developer and Brand Designer",
+      logo: undefined,
+      start: "2023",
       end: "2024",
       description: (
         <>
-          Senior developer and squad leader for an enterprise agile meeting
-          platform.
-          <ul className="list-inside list-disc">
-            <li>
-              Built design system with Tailwind CSS, improving development speed
-              and time to market
-            </li>
-            <li>
-              Implemented engineering practices: PR automation, code review
-              guidelines, and workflows
-            </li>
-            <li>
-              Open source contributions to Relay DevTools and React i18n tooling
-            </li>
-          </ul>
+        Designed and deployed a fully responsive real estate platform using React and MongoDB, featuring dynamic property listings, multimedia content, and real-time backend integration.
         </>
       ),
-    },
-    {
-      company: "Clevertech",
-      link: "https://clevertech.biz",
-      badges: ["Remote", "React", "TypeScript", "Node.js", "Android", "Kotlin"],
-      title: "Lead Android Developer → Full Stack Developer",
-      logo: ClevertechLogo,
-      start: "2015",
-      end: "2021",
-      description: (
-        <>
-          Successfully transitioned from mobile to full-stack development while
-          leading distributed teams.
-          <ul className="list-inside list-disc">
-            <li>
-              Led frontend team at Evercast, building real-time platform
-              supporting 30+ users per room with HD streaming and collaboration
-              tools
-            </li>
-            <li>
-              Developed offline-first Android app for DKMS, improving donor
-              registration process
-            </li>
-            <li>
-              Led development teams across multiple successful client projects
-            </li>
-          </ul>
-        </>
-      ),
-    },
-    {
-      company: "Jojo Mobile",
-      link: "https://bsgroup.eu/",
-      badges: ["On Site", "Android", "Java", "Kotlin"],
-      title: "Android Developer → Lead Android Developer",
-      logo: JojoMobileLogo,
-      start: "2012",
-      end: "2015",
-      description: (
-        <>
-          First Android developer, grew and led a team of 15+ engineers while
-          establishing engineering culture.
-          <ul className="list-inside list-disc">
-            <li>
-              Developed apps for major Polish companies including LOT, Polskie
-              Radio, and Agora
-            </li>
-            <li>Built and mentored high-performing mobile development team</li>
-          </ul>
-        </>
-      ),
-    },
-    {
-      company: "Nokia Siemens Networks",
-      link: "https://www.nokia.com",
-      badges: ["On Site", "C/C++", "LTE", "Agile"],
-      title: "C/C++ Developer",
-      logo: NSNLogo,
-      start: "2010",
-      end: "2012",
-      description:
-        "Developed software for LTE base stations at enterprise scale, gaining strong fundamentals in software architecture, testing practices, and cross-team collaboration.",
     },
   ],
   skills: [
-    "React/Next.js/Remix",
-    "TypeScript",
-    "Tailwind CSS",
-    "Design Systems",
-    "WebRTC",
-    "WebSockets",
-    "Node.js",
-    "GraphQL",
-    "Relay",
-    "System Architecture",
-    "Remote Team Leadership",
+    "C++",
+    "C#",
+    "Python",
+    "JavaScript",
+    "React",
+    "MongoDB",
+    "OpenGL",
+    "Unity",
+    "OpenCV",
+    "Maya",
+    "Blender",
+    "DaVinci Resolve",
+    "Photoshop",
+    "Linux",
+    "AWS",
   ],
   projects: [
     {
-      title: "Monito",
-      techStack: ["TypeScript", "Next.js", "Browser Extension", "PostgreSQL"],
+      title: "MyEngine",
+      techStack: ["C++", "OpenGL", "GLFW", "GLM"],
       description:
-        "Browser extension for debugging web applications. Includes taking screenshots, screen recording, E2E tests generation and generating bug reports",
-      logo: MonitoLogo,
+        "A modular C++ graphics engine using OpenGL 4.1 with structured architecture for custom real-time rendering and input systems.",
       link: {
-        label: "monito.dev",
-        href: "https://monito.dev/",
+        label: "github.com/jesusneri1024/myengine",
+        href: "https://github.com/jesusneri1024/myengine",
       },
     },
     {
-      title: "Consultly",
-      techStack: [
-        "TypeScript",
-        "Next.js",
-        "Vite",
-        "GraphQL",
-        "WebRTC",
-        "Tailwind CSS",
-        "PostgreSQL",
-        "Redis",
-      ],
+      title: "SynapseRunner",
+      techStack: ["Unity", "C#", "Procedural Generation"],
       description:
-        "Platform for online consultations with real-time video meetings and scheduling",
-      logo: ConsultlyLogo,
+        "Retro-futuristic endless runner game featuring procedural terrain, FPS mechanics, and collectible-based upgrades.",
       link: {
-        label: "consultly.com",
-        href: "https://consultly.com/",
+        label: "github.com/jesusneri1024/SynapseRunner",
+        href: "https://github.com/jesusneri1024/SynapseRunner",
       },
     },
     {
-      title: "Minimalist CV",
-      techStack: ["TypeScript", "Next.js", "Tailwind CSS"],
+      title: "Mentes en Juego (Documentary)",
+      techStack: ["DaVinci Resolve", "Production"],
       description:
-        "An open source minimalist, print friendly CV template with a focus on readability and clean design. >9k stars on GitHub",
-      logo: MonitoLogo,
+        "Short documentary on mental health in athletes. Co-directed, shot, and edited using RAW footage and professional post-production workflows.",
       link: {
-        label: "Minimalist CV",
-        href: "https://github.com/BartoszJarocki/cv",
+        label: "Watch on YouTube",
+        href: "https://www.youtube.com/watch?v=CIIWojlIwjw",
+      },
+    },
+    {
+      title: "3D Modeling Reel",
+      techStack: ["Maya", "Hard Surface Modeling"],
+      description:
+        "Showcase of vehicle and prop modeling with optimized polygon topology and attention to scale and proportion.",
+      link: {
+        label: "Watch on YouTube",
+        href: "https://youtu.be/K-TTZHp6Uo0",
+      },
+    },
+    {
+      title: "3D Character Animation Reel",
+      techStack: ["Maya", "Rigging", "Animation"],
+      description:
+        "Character animation focused on body mechanics and expressive motion with custom rigs and detailed camera work.",
+      link: {
+        label: "Watch on YouTube",
+        href: "https://youtu.be/I_ElFrciIiQ",
       },
     },
   ],
