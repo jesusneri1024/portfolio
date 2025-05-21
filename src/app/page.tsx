@@ -8,6 +8,8 @@ import { Summary } from "./components/Summary";
 import { Skills } from "./components/Skills";
 import { Header } from "./components/Header";
 import { RecentCommits } from "./components/RecentCommits";
+import { DemoReel } from "./components/DemoReel"; 
+
 
 
 export const metadata: Metadata = {
@@ -72,6 +74,8 @@ export default function ResumePage() {
         aria-label="Resume Content"
       >
         <Header />
+
+        <DemoReel />
 
         <div className="space-y-8 print:space-y-4">
           <Summary summary={RESUME_DATA.summary} />

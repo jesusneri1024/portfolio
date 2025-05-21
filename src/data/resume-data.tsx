@@ -9,11 +9,10 @@ export const RESUME_DATA = {
   initials: "JNH",
   location: "León, Guanajuato, Mexico",
   locationLink: "https://www.google.com/maps/place/León,+Guanajuato",
-  about: "Interactive Design student with a computer science background, focused on real-time graphics, 3D content creation, and low-level systems development.",
+  about: "Interactive Design student with strong Computer Science skills, focused on 3D engines, real-time rendering, and creative tool development.",
   summary: (
     <>
-      Digital Interactive Design student at Ibero León with prior studies in Computer Science.
-      Skilled in full-stack development, real-time 3D engines, procedural game design, and audiovisual production. Passionate about building interactive experiences across media and platforms.
+        Digital Interactive Design student at Ibero León with a background in Computer Science. Specialized in real-time 3D engines, procedural game design, and audiovisual production, with additional experience in web technologies. Passionate about creating interactive experiences across media and platforms.
     </>
   ),
   avatarUrl: "https://media.licdn.com/dms/image/v2/D4E03AQEnw1G270NM0Q/profile-displayphoto-shrink_800_800/B4EZVsn8RyHMAo-/0/1741284165006?e=1752710400&v=beta&t=AWpd7Xy2vGzuT6Kr6mSW0cmt4gxo9aOBJGE6BYjaa1o", // You can link your profile picture here
