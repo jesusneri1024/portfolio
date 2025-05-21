@@ -1,27 +1,48 @@
-// src/app/api/github-commits/route.ts
+export const dynamic = "force-dynamic";
+
 export async function GET() {
-  const username = "jesusneri1024"; // cambia esto por tu usuario
+  const username = "jesusneri1024";
 
-  const res = await fetch(`https://api.github.com/users/${username}/events/public`);
+  // Paso 1: Obtener todos los repos públicos del usuario
+  const reposRes = await fetch(`https://api.github.com/users/${username}/repos`, {
+    headers: {
+      "Accept": "application/vnd.github+json",
+    },
+  });
 
-  if (!res.ok) {
-    return new Response("Error fetching GitHub events", { status: 500 });
+  if (!reposRes.ok) {
+    return new Response("Error fetching repositories", { status: 500 });
   }
 
-  const events = await res.json();
+  const repos = await reposRes.json();
+  const allCommits: any[] = [];
 
-  // Filtra los eventos tipo PushEvent (que contienen commits)
-  const commits = events
-    .filter((e: any) => e.type === "PushEvent")
-    .flatMap((e: any) =>
-      e.payload.commits.map((commit: any) => ({
-        message: commit.message,
-        url: `https://github.com/${e.repo.name}/commit/${commit.sha}`,
-        repo: e.repo.name,
-        date: e.created_at,
-      }))
-    )
-    .slice(0, 5); // los últimos 5 commits
+  // Paso 2: Para cada repo, obtener sus últimos commits
+  for (const repo of repos) {
+    const repoName = repo.name;
 
-  return Response.json(commits);
+    const commitsRes = await fetch(`https://api.github.com/repos/${username}/${repoName}/commits`, {
+      headers: {
+        "Accept": "application/vnd.github+json",
+      },
+    });
+
+    if (!commitsRes.ok) continue;
+
+    const commits = await commitsRes.json();
+
+    const formatted = commits.slice(0, 2).map((commit: any) => ({
+      message: commit.commit.message,
+      url: commit.html_url,
+      repo: repoName,
+      date: commit.commit.author.date,
+    }));
+
+    allCommits.push(...formatted);
+  }
+
+  // Ordenar por fecha y devolver los últimos 5
+  allCommits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  return Response.json(allCommits.slice(0, 5));
 }
