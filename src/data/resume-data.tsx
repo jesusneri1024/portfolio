@@ -137,7 +137,7 @@ export const RESUME_DATA = {
       title: "3D Character Animation Reel",
       techStack: ["Maya", "Rigging", "Animation"],
       description:
-        "Character animation focused on body mechanics and expressive motion with custom rigs and detailed camera work.",
+        "3D animation in Maya using various techniques, including rig implementation, weight painting, parenting, and expressive motion through facial and body animations.",
       link: {
         label: "Watch on YouTube",
         href: "https://youtu.be/I_ElFrciIiQ",
