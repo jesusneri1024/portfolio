@@ -5,10 +5,12 @@ export async function GET() {
 
   // Paso 1: Obtener todos los repos públicos del usuario
   const reposRes = await fetch(`https://api.github.com/users/${username}/repos`, {
-    headers: {
-      "Accept": "application/vnd.github+json",
-    },
-  });
+  headers: {
+    "Accept": "application/vnd.github+json",
+  },
+  cache: "no-store",
+});
+
 
   if (!reposRes.ok) {
     return new Response("Error fetching repositories", { status: 500 });
@@ -22,10 +24,12 @@ export async function GET() {
     const repoName = repo.name;
 
     const commitsRes = await fetch(`https://api.github.com/repos/${username}/${repoName}/commits`, {
-      headers: {
-        "Accept": "application/vnd.github+json",
-      },
-    });
+  headers: {
+    "Accept": "application/vnd.github+json",
+  },
+  cache: "no-store",
+});
+
 
     if (!commitsRes.ok) continue;
 
@@ -44,5 +48,5 @@ export async function GET() {
   // Ordenar por fecha y devolver los últimos 5
   allCommits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  return Response.json(allCommits.slice(0, 5));
+  return Response.json(allCommits.slice(0, 6));
 }
