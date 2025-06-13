@@ -8,6 +8,7 @@ import {
 } from "../../components/ui/card";
 import { Section } from "../../components/ui/section";
 import { RESUME_DATA } from "../../data/resume-data";
+import UnityGame from './UnityGame';
 
 type ProjectTags = readonly string[];
 
@@ -80,18 +81,24 @@ function ProjectTags({ tags }: ProjectTagsProps) {
 
 interface ProjectCardProps {
   title: string;
-  description: string;
+  description: React.ReactNode; 
   tags: ProjectTags;
   link?: string;
+  extraContent?: React.ReactNode;
+  classNameExtra?: string; // NUEVO
 }
 
-/**
- * Card component displaying project information
- */
-function ProjectCard({ title, description, tags, link }: ProjectCardProps) {
+function ProjectCard({
+  title,
+  description,
+  tags,
+  link,
+  extraContent,
+  classNameExtra,
+}: ProjectCardProps) {
   return (
     <Card
-      className="flex h-full flex-col overflow-hidden border p-3"
+      className={`flex h-full flex-col overflow-hidden border p-3 ${classNameExtra ?? ""}`}
       role="article"
     >
       <CardHeader>
@@ -99,20 +106,19 @@ function ProjectCard({ title, description, tags, link }: ProjectCardProps) {
           <CardTitle className="text-base">
             <ProjectLink title={title} link={link} />
           </CardTitle>
-          <CardDescription
-            className="text-pretty font-mono text-xs print:text-[10px]"
-            aria-label="Project description"
-          >
+          <CardDescription className="text-pretty font-mono text-xs print:text-[10px]">
             {description}
           </CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="mt-auto flex">
+      <CardContent className="mt-auto flex flex-col gap-2">
         <ProjectTags tags={tags} />
+        {extraContent && <div>{extraContent}</div>}
       </CardContent>
     </Card>
   );
 }
+
 
 interface ProjectsProps {
   projects: (typeof RESUME_DATA)["projects"];
@@ -137,12 +143,28 @@ export function Projects({ projects }: ProjectsProps) {
             key={project.title}
             className="h-full" // Added h-full here
           >
-            <ProjectCard
-              title={project.title}
-              description={project.description}
-              tags={project.techStack}
-              link={"link" in project ? project.link.href : undefined}
-            />
+        <ProjectCard
+  title={project.title}
+  description={
+    project.title === "SynapseRunner" ? (
+      <span className="text-white">{project.description}</span>
+    ) : (
+      project.description
+    )
+  }
+  tags={project.techStack}
+  link={"link" in project ? project.link.href : undefined}
+  extraContent={
+    project.title === "SynapseRunner" ? <UnityGame /> : undefined
+  }
+  classNameExtra={
+    project.title === "SynapseRunner"
+      ? "bg-gradient-to-br from-purple-900 to-indigo-800 text-white border-indigo-500 shadow-lg"
+      : ""
+  }
+/>
+
+
           </article>
         ))}
       </div>
