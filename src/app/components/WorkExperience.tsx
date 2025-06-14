@@ -3,6 +3,8 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Section } from "@/components/ui/section";
 import { RESUME_DATA } from "@/data/resume-data";
 import { cn } from "@/lib/utils";
+import BrandbookScrollModal from "./BrandbookScrollModal";
+
 
 type WorkExperience = (typeof RESUME_DATA)["work"][number];
 type WorkBadges = readonly string[];
@@ -119,6 +121,14 @@ function WorkExperienceItem({ work }: WorkExperienceItemProps) {
             badges={badges}
           />
         </div>
+
+        {/* Aquí insertamos el modal solo si es la empresa 12 Line */}
+        {company === "12 Line Inmobiliaria" && (
+          <div className="mt-4">
+            <BrandbookScrollModal />
+          </div>
+        )}
+        
       </CardContent>
     </Card>
   );

@@ -66,7 +66,7 @@ export const RESUME_DATA = {
   work: [
     {
       company: "12 Line Inmobiliaria",
-      link: "",
+      link: "https://pagina-12-line-git-noerrorhero-jesus-neris-projects.vercel.app/",
       badges: ["React", "MongoDB", "Branding", "Media Production"],
       title: "Web Developer and Brand Designer",
       logo: undefined,

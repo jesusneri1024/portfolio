@@ -9,7 +9,12 @@ import { Skills } from "./components/Skills";
 import { Header } from "./components/Header";
 import { RecentCommits } from "./components/RecentCommits";
 import { DemoReel } from "./components/DemoReel"; 
-import UnityGame from './components/UnityGame';
+import BrandbookScrollModal from "./components/BrandbookScrollModal";
+
+
+
+
+
 
 
 
@@ -90,8 +95,11 @@ export default function ResumePage() {
           <Skills skills={RESUME_DATA.skills} />
 
           <Projects projects={RESUME_DATA.projects} />
+          
+          
 
           <RecentCommits />
+
 
         </div>
       </section>
