@@ -22,6 +22,7 @@ export const RESUME_DATA = {
   ),
   avatarUrl: "https://media.licdn.com/dms/image/v2/D4E03AQEnw1G270NM0Q/profile-displayphoto-shrink_800_800/B4EZVsn8RyHMAo-/0/1741284165006?e=1752710400&v=beta&t=AWpd7Xy2vGzuT6Kr6mSW0cmt4gxo9aOBJGE6BYjaa1o", // You can link your profile picture here
   personalWebsiteUrl: "https://www.jesusneri1024.com",
+  cvDownloadUrl: "/jesusnericv.pdf",
   contact: {
     email: "jesusneri1024@outlook.com",
     tel: "+52 477 256 6504",

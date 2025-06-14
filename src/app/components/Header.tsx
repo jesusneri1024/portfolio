@@ -1,4 +1,9 @@
-import { GlobeIcon, MailIcon, PhoneIcon } from "lucide-react";
+import {
+  GlobeIcon,
+  MailIcon,
+  PhoneIcon,
+  DownloadIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RESUME_DATA } from "@/data/resume-data";
@@ -29,16 +34,23 @@ interface SocialButtonProps {
   href: string;
   icon: React.ElementType;
   label: string;
+  download?: boolean;
 }
 
-function SocialButton({ href, icon: Icon, label }: SocialButtonProps) {
+function SocialButton({
+  href,
+  icon: Icon,
+  label,
+  download = false,
+}: SocialButtonProps) {
   return (
     <Button className="size-8" variant="outline" size="icon" asChild>
       <a
         href={href}
         aria-label={label}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={download ? undefined : "_blank"}
+        rel={download ? undefined : "noopener noreferrer"}
+        download={download}
       >
         <Icon className="size-4" aria-hidden="true" />
       </a>
@@ -49,9 +61,14 @@ function SocialButton({ href, icon: Icon, label }: SocialButtonProps) {
 interface ContactButtonsProps {
   contact: typeof RESUME_DATA.contact;
   personalWebsiteUrl?: string;
+  cvDownloadUrl?: string;
 }
 
-function ContactButtons({ contact, personalWebsiteUrl }: ContactButtonsProps) {
+function ContactButtons({
+  contact,
+  personalWebsiteUrl,
+  cvDownloadUrl,
+}: ContactButtonsProps) {
   return (
     <div
       className="flex gap-x-1 pt-1 font-mono text-sm text-foreground/80 print:hidden"
@@ -62,21 +79,29 @@ function ContactButtons({ contact, personalWebsiteUrl }: ContactButtonsProps) {
         <SocialButton
           href={personalWebsiteUrl}
           icon={GlobeIcon}
-          label="Personal website"
+          label="Sitio web"
+        />
+      )}
+      {cvDownloadUrl && (
+        <SocialButton
+          href={cvDownloadUrl}
+          icon={DownloadIcon}
+          label="Descargar CV"
+          download
         />
       )}
       {contact.email && (
         <SocialButton
           href={`mailto:${contact.email}`}
           icon={MailIcon}
-          label="Email"
+          label="Correo"
         />
       )}
       {contact.tel && (
         <SocialButton
           href={`tel:${contact.tel}`}
           icon={PhoneIcon}
-          label="Phone"
+          label="Teléfono"
         />
       )}
       {contact.social.map((social) => (
@@ -94,9 +119,14 @@ function ContactButtons({ contact, personalWebsiteUrl }: ContactButtonsProps) {
 interface PrintContactProps {
   contact: typeof RESUME_DATA.contact;
   personalWebsiteUrl?: string;
+  cvDownloadUrl?: string;
 }
 
-function PrintContact({ contact, personalWebsiteUrl }: PrintContactProps) {
+function PrintContact({
+  contact,
+  personalWebsiteUrl,
+  cvDownloadUrl,
+}: PrintContactProps) {
   return (
     <div
       className="hidden gap-x-2 font-mono text-sm text-foreground/80 print:flex print:text-[12px]"
@@ -109,6 +139,18 @@ function PrintContact({ contact, personalWebsiteUrl }: PrintContactProps) {
             href={personalWebsiteUrl}
           >
             {new URL(personalWebsiteUrl).hostname}
+          </a>
+          <span aria-hidden="true">/</span>
+        </>
+      )}
+      {cvDownloadUrl && (
+        <>
+          <a
+            className="underline hover:text-foreground/70"
+            href={cvDownloadUrl}
+            download
+          >
+            Descargar CV
           </a>
           <span aria-hidden="true">/</span>
         </>
@@ -161,11 +203,13 @@ export function Header() {
         <ContactButtons
           contact={RESUME_DATA.contact}
           personalWebsiteUrl={RESUME_DATA.personalWebsiteUrl}
+          cvDownloadUrl={RESUME_DATA.cvDownloadUrl}
         />
 
         <PrintContact
           contact={RESUME_DATA.contact}
           personalWebsiteUrl={RESUME_DATA.personalWebsiteUrl}
+          cvDownloadUrl={RESUME_DATA.cvDownloadUrl}
         />
       </div>
 
