@@ -9,7 +9,16 @@ import { Skills } from "./components/Skills";
 import { Header } from "./components/Header";
 import { RecentCommits } from "./components/RecentCommits";
 import { DemoReel } from "./components/DemoReel"; 
-import BrandbookScrollModal from "./components/BrandbookScrollModal";
+import VisitorInfo from "./components/VisitorInfo";
+import ParticleCanvas from "./components/ParticleCanvas";
+import MyEnginePortfolio from "./components/MyEnginePortfolio";
+import SynapseRunnerPortfolio from "./components/SynapseRunnerPortfolio";
+
+
+
+
+
+
 
 
 
@@ -69,44 +78,43 @@ function getCommandMenuLinks() {
 
 export default function ResumePage() {
   return (
-    <main
-      className="container relative mx-auto scroll-my-12 overflow-auto p-4 print:p-11 md:p-16"
-      id="main-content"
-    >
-      <div className="sr-only">
-        <h1>{RESUME_DATA.name}&apos;s Resume</h1>
-      </div>
+    <>
+      {/* Partículas animadas de fondo */}
+      <ParticleCanvas />
 
-      <section
-        className="mx-auto w-full max-w-2xl space-y-8 bg-white print:space-y-4"
-        aria-label="Resume Content"
+      <main
+        className="container relative mx-auto scroll-my-12 overflow-auto p-4 print:p-11 md:p-16"
+        id="main-content"
       >
-        <Header />
-
-        <DemoReel />
-
-        <div className="space-y-8 print:space-y-4">
-          <Summary summary={RESUME_DATA.summary} />
-
-          <WorkExperience work={RESUME_DATA.work} />
-
-          <Education education={RESUME_DATA.education} />
-
-          <Skills skills={RESUME_DATA.skills} />
-
-          <Projects projects={RESUME_DATA.projects} />
-          
-          
-
-          <RecentCommits />
-
-
+        <div className="sr-only">
+          <h1>{RESUME_DATA.name}&apos;s Resume</h1>
         </div>
-      </section>
 
-      <nav className="print:hidden" aria-label="Quick navigation">
-        <CommandMenu links={getCommandMenuLinks()} />
-      </nav>
-    </main>
+        <section
+          className="mx-auto w-full max-w-2xl space-y-8 bg-white print:space-y-4"
+          aria-label="Resume Content"
+        >
+          <Header />
+          <DemoReel />
+          <div className="space-y-8 print:space-y-4">
+            <Summary summary={RESUME_DATA.summary} />
+            <WorkExperience work={RESUME_DATA.work} />
+            <Education education={RESUME_DATA.education} />
+            <Skills skills={RESUME_DATA.skills} />
+            <Projects projects={RESUME_DATA.projects} />
+
+            <MyEnginePortfolio/>
+
+            <SynapseRunnerPortfolio/>
+ 
+            
+          </div>
+        </section>
+
+        <nav className="print:hidden" aria-label="Quick navigation">
+          <CommandMenu links={getCommandMenuLinks()} />
+        </nav>
+      </main>
+    </>
   );
 }
